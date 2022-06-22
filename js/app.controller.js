@@ -11,7 +11,6 @@ var gKey = GKEY.KEY
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
-window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onGo = onGo
 
@@ -36,14 +35,6 @@ function getPosition() {
 function onAddMarker({lat,lng}) {
     console.log('Adding a marker');
     mapService.addMarker({ lat, lng });
-}
-
-function onGetLocs() {
-    locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs)
-        })
 }
 
 function onGetUserPos() {
