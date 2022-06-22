@@ -43,8 +43,6 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(({coords:{latitude,longitude}}) => {
-            // console.log('lat :',latitude);
-            // console.log('lng :',longitude);
             onPanTo({lat:latitude,lng:longitude})
         })
         .catch(err => {
