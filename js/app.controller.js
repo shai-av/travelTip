@@ -55,6 +55,6 @@ function onPanTo() {
 
 function onGo(ev, val) {
     ev.preventDefault()
-    // const value = val[0].value
-    console.dir(val);
+    if (val === '') return
+
 }
