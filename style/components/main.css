@@ -1,0 +1,43 @@
+main {
+    background-color: var(--clr2);
+}
+
+.grid-body {
+    display: grid;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 7fr;
+    grid-template-areas:
+        "header"
+        "main"
+    ;
+}
+
+header {
+    grid-area: header;
+}
+
+main {
+    grid-area: main;
+    background-color: var(--clr1);
+    
+}
+
+.grid-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr minmax(60%,3fr);
+    grid-template-areas:
+        "weather map"
+        "div2 txt"
+    ;
+}
+
+.map-container{
+    grid-area:map;
+}
+.weather-container{
+    grid-area:wheater;
+}
+

@@ -1,0 +1,16 @@
+
+
+/*  */
+@import 'basic/base.css';
+@import 'setup/vars.css';
+@import 'setup/typography.css';
+@import 'basic/layout.css';
+@import 'basic/helpers.css';
+
+@import 'components/header.css';
+@import 'components/main.css';
+@import 'components/footer.css';
+@import 'components/song-card.css';
+@import 'components/txt.css';
+
+@import 'mq/mq.css'

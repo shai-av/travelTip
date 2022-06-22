@@ -1,0 +1,8 @@
+*{
+    box-sizing: border-box;
+    color:var(--clr2)
+}
+body{
+    margin:0;
+    height: 100vh;
+}
