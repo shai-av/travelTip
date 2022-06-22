@@ -22,7 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 center: { lat, lng },
                 zoom: 15
             })
-            console.log('Map!', gMap);
+            // console.log('Map!', gMap);
         })
 }
 
