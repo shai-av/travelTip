@@ -9,8 +9,6 @@
 
 @import 'components/header.css';
 @import 'components/main.css';
-@import 'components/footer.css';
-@import 'components/song-card.css';
-@import 'components/txt.css';
+
 
 @import 'mq/mq.css'

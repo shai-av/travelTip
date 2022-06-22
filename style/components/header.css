@@ -10,15 +10,19 @@ header {
     width: 40%;
 }
 .main-header form input{
-    width:70%;
+    /* width:70%; */
     line-height: 2;
-    color: var(--clr1);
+    /* color: var(--clr1); */
 }
 .main-header form button{
-    color: var(--clr1);
+    /* color: var(--clr1); */
     padding:0.5em;
 }
 .main-logo{
     font-size: 5em;
     font-family: "Comic Sans MS";
+}
+
+.main-header .inps-btns{
+    flex-basis:40%;
 }

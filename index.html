@@ -9,12 +9,16 @@
 <body>
     <header>
         <div class="main-header main-layout flex align-center space-between">
-            <span class="main-logo">LOGO</span>
-            <form onsubmit="onSearch(event,this)">
+            <span class="main-logo">Travel Tip</span>
+            <div class="inps-btns flex flex-column">
+            <form onsubmit="onGo(event,this[0].value)">
                 <input type="search">
                 <button>GO</button>
             </form>
+            <button>My Location</button>
         </div>
+        </div>
+        
     </header>
     <div id="map" style="width: 100%; height: 400px;"></div>
     <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
