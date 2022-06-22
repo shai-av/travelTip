@@ -1,6 +1,6 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-import {GKEY} from '../apiKey.js'
+import { GKEY } from '../apiKey.js'
 
 export const appController = {
     renderTable,
@@ -15,13 +15,16 @@ window.onGetUserPos = onGetUserPos
 window.onDelete = onDelete
 window.onGo = onGo
 window.onLocClk = onLocClk
+
 function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready');
-            renderTable() })
+            renderTable()
+            isQueryParam()
+        })
         .catch(() => console.log('Error: cannot init map'));
-        
+  
 }
 
 
@@ -33,55 +36,71 @@ function getPosition() {
     })
 }
 
-function onAddMarker({lat,lng}) {
+function onAddMarker({ lat, lng }) {
     console.log('Adding a marker');
     mapService.addMarker({ lat, lng });
 }
 
 function onGetUserPos() {
     getPosition()
-        .then(({coords:{latitude,longitude}}) => {
-            onPanTo({lat:latitude,lng:longitude})
+        .then(({ coords: { latitude, longitude } }) => {
+            onPanTo({ lat: latitude, lng: longitude })
         })
         .catch(err => {
             console.log('err!!!', err);
         })
 }
-function onPanTo({lat,lng}) {
+function onPanTo({ lat, lng }) {
     console.log('Panning the Map');
-    onAddMarker({lat,lng})
+    onAddMarker({ lat, lng })
     mapService.panTo(lat, lng);
+    setQuerySTring(lat, lng)
 }
 
 function onGo(ev, val) {
     ev.preventDefault()
-    
+
     if (val === '') return
     const prm = askLocation(val)
-    prm.then(res=>onPanTo(res.results[0].geometry.location))
+    prm.then(res => onPanTo(res.results[0].geometry.location))
 }
 
 function askLocation(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gKey}`).then(res => res.data)
 }
 
-function onDelete(id){
+function onDelete(id) {
     locService.deleteLoc(id)
     renderTable()
 }
 
 function renderTable() {
-locService.getLocs().then(locs=> {
-    var strsHtml = locs.map(loc => {
-        return `<article class="loc-card">
+    locService.getLocs().then(locs => {
+        var strsHtml = locs.map(loc => {
+            return `<article class="loc-card">
         <h1 class="name">${loc.name} 
         <button onclick="onLocClk(${loc.lat},${loc.lng})">go</button>
         <button onclick="onDelete('${loc.id}')"</button>delete</h1>
     </article>`})
-    document.querySelector('.locs').innerHTML = strsHtml.join('')
-})
+        document.querySelector('.locs').innerHTML = strsHtml.join('')
+    })
 }
 
-function onLocClk(lat,lng){
-onPanTo({lat,lng})
+function onLocClk(lat, lng) {
+    onPanTo({ lat, lng })
+}
+
+function setQuerySTring(lat, lng) {
+    const queryStringParams = `?lat=${lat}&lng=${lng}`
+    const newUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + queryStringParams
+    window.history.pushState({ path: newUrl }, '', newUrl)
+}
+
+function isQueryParam(){
+    const queryStringParams = new URLSearchParams(window.location.search)
+    const lat = +queryStringParams.get('lat')
+    const lng = +queryStringParams.get('lng')
+    console.log(lat,lng);
+    if(!lat||!lng) return
+    onPanTo({lat,lng})
 }
