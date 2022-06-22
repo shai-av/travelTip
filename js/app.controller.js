@@ -1,5 +1,8 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
+import {GKEY} from '../apiKey.js'
+
+var gKey = GKEY.KEY
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
@@ -61,5 +64,5 @@ function onGo(ev, val) {
 }
 
 function askLocation(address) {
-    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=`).then(res => res.data)
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gKey}`).then(res => res.data)
 }
