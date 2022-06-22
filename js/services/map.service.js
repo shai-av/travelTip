@@ -13,7 +13,7 @@ export const mapService = {
 var gKey = GKEY.KEY
 
 var gMap;
-// 'hh'
+
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
     return _connectGoogleApi()
@@ -30,6 +30,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 // Close the current InfoWindow.
                 let lat = ev.latLng.lat()
                 let lng = ev.latLng.lng()
+                addMarker({lat,lng})
                 let locName=prompt("do you want?")
                   if(locName) {locService.addLoc(locName,lat,lng)}
                   else {console.log('enter');}

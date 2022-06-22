@@ -13,7 +13,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
-
+window.onGo = onGo
 
 function onInit() {
     mapService.initMap()
@@ -33,40 +33,31 @@ function getPosition() {
     })
 }
 
-function onAddMarker() {
+function onAddMarker({lat,lng}) {
     console.log('Adding a marker');
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
-}
-
-function onGetLocs() {
-    locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs)
-        })
+    mapService.addMarker({ lat, lng });
 }
 
 function onGetUserPos() {
     getPosition()
-        .then(pos => {
-            console.log('User position is:', pos.coords);
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+        .then(({coords:{latitude,longitude}}) => {
+            onPanTo({lat:latitude,lng:longitude})
         })
         .catch(err => {
             console.log('err!!!', err);
         })
 }
-function onPanTo() {
+function onPanTo({lat,lng}) {
     console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+    onAddMarker({lat,lng})
+    mapService.panTo(lat, lng);
 }
 
 function onGo(ev, val) {
     ev.preventDefault()
     if (val === '') return
     const prm = askLocation(val)
-    prm.then(res=>console.log(res))
+    prm.then(res=>onPanTo(res))
 }
 
 function askLocation(address) {
