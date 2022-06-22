@@ -51,18 +51,19 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo() {
+function onPanTo({lat,lng}) {
     console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+    mapService.panTo(lat, lng);
 }
 
 function onGo(ev, val) {
     ev.preventDefault()
     if (val === '') return
     const prm = askLocation(val)
-    prm.then(res=>console.log(res))
+    prm.then(res=>onPanTo(res))
 }
 
 function askLocation(address) {
-    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gKey}`).then(res => res.data)
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gKey}`)
+    .then(res => res.data).then(res=>res.results[0].geometry.location)
 }
