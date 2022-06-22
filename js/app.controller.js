@@ -56,5 +56,10 @@ function onPanTo() {
 function onGo(ev, val) {
     ev.preventDefault()
     if (val === '') return
+    const prm = askLocation(val)
+    prm.then(res=>console.log(res))
+}
 
+function askLocation(address) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=`).then(res => res.data)
 }
