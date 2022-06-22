@@ -73,6 +73,7 @@ function askLocation(address) {
 }
 
 
+
 function renderTable() {
 locService.getLocs().then(locs=> {
     var strsHtml = locs.map(loc => {
