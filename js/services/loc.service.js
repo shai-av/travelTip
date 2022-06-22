@@ -1,6 +1,7 @@
 
 
 import { utilService } from "./util.js";
+import { appController } from "../app.controller.js";
 
 export const locService = {
     getLocs,
@@ -18,6 +19,7 @@ function addLoc(name,lat,lng) {
         lng,
     })
     utilService.saveToStorage(STORAGE_KEY,locs)
+    appController.renderTable()
 }
 
 const locs = [
