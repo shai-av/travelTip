@@ -1,12 +1,14 @@
-
+import { locService } from './loc.service.js'
+import {GKEY} from '../../apiKey.js'
 
 export const mapService = {
     initMap,
     addMarker,
     panTo
+
 }
 
-import {GKEY} from '../../apiKey.js'
+
 
 var gKey = GKEY.KEY
 
@@ -29,7 +31,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 let lat = ev.latLng.lat()
                 let lng = ev.latLng.lng()
                 let locName=prompt("do you want?")
-                  if(locName!=='') console.log(locName,lat,lng)
+                  if(locName) {locService.addLoc(locName,lat,lng)}
+                  else {console.log('enter');}
+                  
 
            }) 
 })

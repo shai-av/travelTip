@@ -1,17 +1,23 @@
+
+
 import { utilService } from "./util.js";
 
 export const locService = {
-    getLocs
+    getLocs,
+    addLoc
 }
 
+const STORAGE_KEY='locsDB'
 
-
-function addLoc(lat,l) {
+function addLoc(name,lat,lng) {
+    
     locs.push({
         id: utilService.makeId(),
-
-
+        name,
+        lat,
+        lng,
     })
+    utilService.saveToStorage(STORAGE_KEY,locs)
 }
 
 const locs = [
