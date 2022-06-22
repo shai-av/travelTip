@@ -1,11 +1,15 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
+import {GKEY} from '../apiKey.js'
+
+var gKey = GKEY.KEY
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onGo = onGo
 
 function onInit() {
     mapService.initMap()
@@ -50,4 +54,15 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+function onGo(ev, val) {
+    ev.preventDefault()
+    if (val === '') return
+    const prm = askLocation(val)
+    prm.then(res=>console.log(res))
+}
+
+function askLocation(address) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gKey}`).then(res => res.data)
 }
