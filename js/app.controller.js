@@ -38,6 +38,14 @@ function onAddMarker({lat,lng}) {
     mapService.addMarker({ lat, lng });
 }
 
+function onGetLocs() {
+    locService.getLocs()
+        .then(locs => {
+            console.log('Locations:', locs)
+            document.querySelector('.locs').innerText = JSON.stringify(locs)
+        })
+}
+
 function onGetUserPos() {
     getPosition()
         .then(({coords:{latitude,longitude}}) => {
