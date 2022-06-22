@@ -11,7 +11,7 @@ import {GKEY} from '../../apiKey.js'
 var gKey = GKEY.KEY
 
 var gMap;
-
+// 'hh'
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
     return _connectGoogleApi()
