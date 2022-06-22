@@ -8,12 +8,13 @@ export const appController = {
 
 var gKey = GKEY.KEY
 
-window.onload = onInit;
-window.onAddMarker = onAddMarker;
-window.onPanTo = onPanTo;
-window.onGetUserPos = onGetUserPos;
+window.onload = onInit
+window.onAddMarker = onAddMarker
+window.onPanTo = onPanTo
+window.onGetUserPos = onGetUserPos
+window.onDelete = onDelete
 window.onGo = onGo
-
+window.onLocClk = onLocClk
 function onInit() {
     mapService.initMap()
         .then(() => {
@@ -54,25 +55,33 @@ function onPanTo({lat,lng}) {
 
 function onGo(ev, val) {
     ev.preventDefault()
+    
     if (val === '') return
     const prm = askLocation(val)
-    prm.then(res=>onPanTo(res))
+    prm.then(res=>onPanTo(res.results[0].geometry.location))
 }
 
 function askLocation(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gKey}`).then(res => res.data)
 }
 
-
+function onDelete(id){
+    locService.deleteLoc(id)
+    renderTable()
+}
 
 function renderTable() {
 locService.getLocs().then(locs=> {
     var strsHtml = locs.map(loc => {
         return `<article class="loc-card">
         <h1 class="name">${loc.name} 
-        <button onclick="onPanTo(${loc.lat,loc.lng})">go</button>
-        <button onclick="onDelete(${loc.id})"</button>delete</h1>
+        <button onclick="onLocClk(${loc.lat},${loc.lng})">go</button>
+        <button onclick="onDelete('${loc.id}')"</button>delete</h1>
     </article>`})
     document.querySelector('.locs').innerHTML = strsHtml.join('')
 })
+}
+
+function onLocClk(lat,lng){
+onPanTo({lat,lng})
 }
